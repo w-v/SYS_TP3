@@ -14,6 +14,8 @@ int main (){
   struct sembuf up = {0,1,0};
 
   id2 = semget((key_t)6666,1,0600|IPC_CREAT);
+  
+  printf("pid: %d",(int) getpid());
 
   semop(id2,&up,1);
 }
