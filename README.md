@@ -1,7 +1,7 @@
 # Exercise on semaphores with sys/sem.h
 
 bin/tp3 writes into a string in shared memory  
-Executing it twice within ~30 seconds doesn't scramble the writes thanks to a semaphore
+Executing it twice within ~30 seconds doesn't scramble the writes thanks to a semaphore  
 The one executed second waits for the first one to finish his write to the string
 
 ## Notes
