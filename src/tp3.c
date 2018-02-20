@@ -24,10 +24,6 @@ void ecrire_tableau(int *compteur, char *tableau) {
   }
 }
 
-//void initialize(){}
-//mettre semctl dans nettoie.c
-//
-
 int main() {
   int id, *compteur;
   char *tableau;
