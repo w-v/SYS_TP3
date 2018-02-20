@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <strings.h>
 #include <sys/sem.h>
+#include <errno.h>
+
 
 
 #define TAILLE 1024
@@ -45,25 +47,29 @@ int main() {
   
   if (id2<0) { 
 
+    if(errno != EEXIST) {
+      // error was not about the semaphore having already been created
+      fprintf(stderr,"Error semget errno: %d\n",errno);
+      exit(1);
+    
+    }
+    else {
+      // semaphore 6666 already exists, getting its id
+      // (this time without having to worry about wether it already exists)
+      // (without IPC_EXCL)
+      id2 = semget((key_t)6666,1,0600|IPC_CREAT);
+    
+    }
+
+  }
+  else {
+
     // semget did not throw an error, semaphore 6666 didn't already exist
     // this process just created it
     
     // initializing it to 1
     semop(id2,&up,1);
 
-  }
-  else {
-
-    // error was not about the semaphore having already been created
-    if(errno != EEXIST) 
-      perror("Error semget errno: %d",errno); exit(1);
-  
-    else
-      // semaphore 6666 already exists, getting its id
-      // (this time without having to worry about wether it already exists)
-      // (without IPC_EXCL)
-      id2 = semget((key_t)6666,1,0600|IPC_CREAT);
-    
   }
 
   /* using the semaphore */
